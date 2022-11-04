@@ -11,27 +11,30 @@ class MyApp extends StatefulWidget{
   MyAppState createState() => MyAppState();
 }
 
-
 class MyAppState extends State<MyApp> {
 
-  var darkMode;
+  var darkMode = false;
 
   void initState(){
+    print("init state");
     super.initState();
-    darkMode = false;
+    //darkMode = false;
     initDarkMode("0");
-    
   }
 
   void initDarkMode(val) async{
+    print("initDarkMode");
+    print("------------");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (val == "0"){
       setState(() {darkMode = prefs.getBool("darkMode") ?? false;}) ;
       }
     else { //updating the darkMode value
+      print(val);
       prefs.setBool("darkMode",val);
       setState(() {darkMode = val;}); 
     }
+    print("------------");
     //await deleteDatabase('journal.sqlite3.db');
   }
 
@@ -41,6 +44,10 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    print("inside build. darkmode=");
+    print("------------");
+    print(darkMode);
+    print("------------");
       return MaterialApp(
         title: 'Flutter Demo',
         home: ScaffoldController(),
@@ -65,13 +72,12 @@ class ScaffoldController extends StatelessWidget {
         ) ,
         floatingActionButton: FloatingActionButton(
           onPressed:() {goToAddEntry(context);},
-          child: const Icon(Icons.navigation),
+          child: const Icon(Icons.add),
           ),
         );
         
   }
 }
-
 
 class VerticalLayout extends StatelessWidget{
 
@@ -82,12 +88,10 @@ class VerticalLayout extends StatelessWidget{
   }
 }
 
-
 class HorizontalLayout extends StatefulWidget{
   @override 
   HorizontalLayoutState createState() => HorizontalLayoutState();
 }
-
 
 class HorizontalLayoutState extends State<HorizontalLayout>{
 
@@ -105,7 +109,6 @@ class HorizontalLayoutState extends State<HorizontalLayout>{
     );
   }
 }
-
 
 void goToAddEntry(BuildContext context){
 	Navigator.of(context).push(MaterialPageRoute(builder: (context) => journal()));
