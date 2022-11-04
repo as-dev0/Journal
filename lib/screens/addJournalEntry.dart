@@ -7,7 +7,6 @@ import '../app.dart';
 const createSchemaPath = "assets/createSchema.txt";
 const insertRowPath = "assets/insertRow.txt";
 
-
 class journal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,12 +17,10 @@ class journal extends StatelessWidget {
   }
 }
 
-
 class JournalEntryForm extends StatefulWidget {
   @override 
   JournalEntryFormState createState() => JournalEntryFormState();
 }
-
 
 class JournalEntryFormState extends State<JournalEntryForm> {
 
@@ -56,6 +53,7 @@ class JournalEntryFormState extends State<JournalEntryForm> {
           ),
 
           TextFormField(
+            maxLines: 7,
             autofocus: true,
             decoration: InputDecoration(labelText: 'Body'),
             onSaved: (value) {
@@ -63,21 +61,6 @@ class JournalEntryFormState extends State<JournalEntryForm> {
             },
             validator: (value) {
               return value!.isEmpty ? "Please enter a body" : null;
-            },
-          ),
-
-          TextFormField(
-            autofocus: true,
-            decoration: InputDecoration(labelText: 'Rating'),
-            onSaved: (value) {
-              fields.rating = value;
-            },
-            validator: (value) {
-              if (value!.isEmpty || (value != "4" && value != "1" && value != "2" && value != "3")){
-                return 'Please enter a rating between 1 and 4';
-              } else {
-                return null;
-              }
             },
           ),
 
@@ -101,7 +84,7 @@ class JournalEntryFormState extends State<JournalEntryForm> {
 
                 await database.transaction( (txn) async {
                   await txn.rawInsert(insertRow,
-                  [fields.title, fields.body, fields.rating, fields.dateTime]);
+                  [fields.title, fields.body, fields.dateTime]);
                 });
 
                 await database.close();

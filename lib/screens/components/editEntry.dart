@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../app.dart';
 
-class drawerSettings extends StatefulWidget{
+class editSettings extends StatefulWidget{
   @override 
-  drawerSettingsState createState() => drawerSettingsState();
+  editSettingsState createState() => editSettingsState();
 }
 
-class drawerSettingsState extends State<drawerSettings> {
+class editSettingsState extends State<editSettings> {
   @override
   Widget build(BuildContext context) {
 
@@ -17,6 +17,7 @@ class drawerSettingsState extends State<drawerSettings> {
           padding: EdgeInsets.zero,
 
           children: [
+
             const DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blue,
@@ -31,7 +32,9 @@ class drawerSettingsState extends State<drawerSettings> {
                   Switch(value: aState!.darkMode, 
                         onChanged: (value) => aState.initDarkMode(value))
                   ])  , 
-            )
+            ),
+
+            ListTile()
             ],
         ),
     );

@@ -1,4 +1,5 @@
 import 'package:call_me_maybe/app.dart';
+import 'package:call_me_maybe/screens/addJournalEntry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
@@ -10,7 +11,6 @@ class listJournalEntries extends StatefulWidget{
   @override 
   listJournalEntriesState createState() => listJournalEntriesState();
 }
-
 
 class listJournalEntriesState extends State<listJournalEntries>{
 
@@ -47,23 +47,23 @@ class listJournalEntriesState extends State<listJournalEntries>{
             onTap: (() {goToSingleEntry(
               journalEntries[index][0], 
               journalEntries[index][1], 
-              journalEntries[index][2],
-              journalEntries[index][3].substring(0,10) );}),
+              journalEntries[index][2].substring(0,10) ,
+              journalEntries[index][3]);}),
             child: ListTile(
             trailing: Icon(Icons.more_horiz),
             title: Text(journalEntries[index][0] ),
-            subtitle: Text(journalEntries[index][3].substring(0,10)))
+            subtitle: Text(journalEntries[index][2].substring(0,10)))
           );
         })
       );
     }
   }
+// changed ---------------------------------------------------------------<<<<<<<<<<<<<<<<<<<<<
+  void goToSingleEntry(title, body, date, id){
 
-  void goToSingleEntry(title, body, rating, date){
-
-    setValues(title, body, rating, date);
+    setValues(title, body, date, id);
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => singleJournalEntry()
+      builder: (context) => journal1()
     ));
   }
 
@@ -81,7 +81,7 @@ class listJournalEntriesState extends State<listJournalEntries>{
     List<Map> journalRecords = await database.rawQuery('SELECT * FROM journal_entries');
 
     var journalEntriesDummy = journalRecords.map((record) {
-      return [record['title'], record['body'], record['rating'], record['date']];
+      return [record['title'], record['body'], record['date'], record['id']];
     } ).toList();
 
     if (this.mounted){
@@ -98,7 +98,6 @@ class listJournalEntriesHorizontal extends StatefulWidget{
   @override 
   listJournalEntriesStateHorizontal createState() => listJournalEntriesStateHorizontal();
 }
-
 
 class listJournalEntriesStateHorizontal extends State<listJournalEntriesHorizontal>{
 
@@ -135,20 +134,20 @@ class listJournalEntriesStateHorizontal extends State<listJournalEntriesHorizont
             onTap: (() {updateSingleEntry(
               journalEntries[index][0], 
               journalEntries[index][1], 
-              journalEntries[index][2],
-              journalEntries[index][3].substring(0,10) );}),
+              journalEntries[index][2].substring(0,10),
+              journalEntries[index][3] );}),
             child: ListTile(
             trailing: Icon(Icons.more_horiz),
             title: Text(journalEntries[index][0] ),
-            subtitle: Text(journalEntries[index][3].substring(0,10)))
+            subtitle: Text(journalEntries[index][2].substring(0,10)))
           );
         })
       );
     }
   }
 
-  void updateSingleEntry(title, body, rating, date){
-    setValues(title, body, rating, date);
+  void updateSingleEntry(title, body, date, id){
+    setValues(title, body, date, id);
     HorizontalLayoutState? hLayout = context.findAncestorStateOfType<HorizontalLayoutState>();
     hLayout!.update();
   }
@@ -167,7 +166,7 @@ class listJournalEntriesStateHorizontal extends State<listJournalEntriesHorizont
     List<Map> journalRecords = await database.rawQuery('SELECT * FROM journal_entries');
 
     var journalEntriesDummy = journalRecords.map((record) {
-      return [record['title'], record['body'], record['rating'], record['date']];
+      return [record['title'], record['body'], record['date']];
     } ).toList();
 
     if (this.mounted){

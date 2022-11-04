@@ -2,7 +2,6 @@ class JournalEntryFields {
 
   String? title;
   String? body;
-  String? rating;
   String? dateTime;
 
   JournalEntryFields();
@@ -13,10 +12,6 @@ class JournalEntryFields {
 
   void setBody(body){
     body = body;
-  }
-
-  void setRating(rating){
-    rating = rating;
   }
 
   void setDateTime(dateTime){
